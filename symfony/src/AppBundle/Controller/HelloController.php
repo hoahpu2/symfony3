@@ -160,7 +160,9 @@ class HelloController extends Controller{
 				$request->query->getInt('page', 2)/*page number*/,
             	$request->query->getInt('limit', 5)/*limit per page*/
 		);
-		
+		$repository = $this->getDoctrine()->getRepository(Product::class);
+		$products = $repository->findAll();
+		die($products);
 		return $this->render('admin/product/index.html.twig', [
 				'blog_posts' => $blogPosts,
 				]);

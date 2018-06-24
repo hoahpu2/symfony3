@@ -2,10 +2,29 @@
 # https://symfony.com/doc/current/security.html
 security:
 
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER]
+
+    encoders:
+        symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+        AppBundle\Entity\User:
+            algorithm: bcrypt
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
+        chain_provider:
+            chain:
+                providers: [ db_provider, in_memory ]
+        db_provider:
+            Entity:
+                class: AppBundle: User
+                property: name
         in_memory:
-            memory: ~
+            memory: 
+                users:
+                    admin:
+                        password: $2y$13$e9W3TjFZ0nT/hNMIq.c2l.9pyCCwV7AHnX22EntfJ3Uj0FAG3g502
+                        roles: 'ROLE_ADMIN'
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,6 +33,12 @@ security:
             security: false
 
         main:
+            pattern: ^/
+            provider: in_memory
+            form_login:
+                login_path: login
+                check_path: login
+            logout: true
             anonymous: ~
             # activate different ways to authenticate
 
@@ -22,3 +47,6 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+    access_control:
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/product/add, roles: ROLE_ADMIN }

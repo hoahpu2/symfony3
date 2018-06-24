@@ -4,17 +4,34 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends Controller
 {
     /**
-     * @Route("admin/login")
+     * @Route("admin/login", name="login")
      */
-    public function LoginAction()
+    public function LoginAction(Request $request, AuthenticationUtils $authenticationUtils)
     {
-        return $this->render('AppBundle:Login:login.html.twig', array(
-            // ...
+
+    	$error = $authenticationUtils->getLastAuthenticationError();
+
+	    // last username entered by the user
+	    $lastUsername = $authenticationUtils->getLastUsername();
+
+    
+        return $this->render('admin/login/login.html.twig', array(
+            'last_username' => $lastUsername,
+        	'error'         => $error,
         ));
+    }
+
+    /**
+     * @Route("admin/logout", name="logout")
+     */
+    public function LogoutAction(){
+
     }
 
 }

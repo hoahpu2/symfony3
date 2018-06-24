@@ -62,9 +62,9 @@ class Product
 		return $this->pro_images;
 	}
 	
-	function __construct() {
-		$this->pro_images = new ArrayCollection();
-	}
+	// public function __construct() {
+	// 	$this->pro_images = new ArrayCollection();
+	// }
 	
 	/**
 	 * @param string $pro_images

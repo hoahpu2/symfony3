@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity
  * @ORM\Table(name="user")
  */
-class User implements UserInterface
+class User
 	{
 	/**
 	 * @ORM\Column(type="integer")
@@ -24,17 +24,17 @@ class User implements UserInterface
 	/**
 	 * @ORM\Column(type="string", length=40)
 	 */
-	private $fullname;
+	private $email;
 
 	/**
-	 * @ORM\Column(type="decimal", scale=2)
+	 * @ORM\Column(type="string", length=100)
 	 */
-	private $price;
+	private $password;
 
 	/**
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="string", length=10)
 	 */
-	private $description;
+	private $roles;
 
 	public function getId(){
 		return $this->id;
@@ -48,19 +48,41 @@ class User implements UserInterface
 		$this->name = $name;
 	}
 
-	public function setFullname($fullname){
-		$this->fullname = $fullname;
+	public function setEmail($email){
+		$this->email = $email;
 	}
 
-	public function getFullname(){
-		return $this->fullname;
+	public function getEmail(){
+		return $this->email;
 	}
 
-	public function setPrice($price){
-		$this->price = $price;
+	public function setPassword($password){
+		$this->password = $password;
 	}
 
-	public function setDescription($description){
-		$this->description = $description;
+	public function serialize(){
+		return serialize([
+			$this->id,
+			$this->name,
+			$this->password,
+		]);
+	}
+
+	public function unserialize($serialized){
+		list(
+			$this->id,
+			$this->name,
+			$this->password,
+		) = unserialize($serialized);
+	}
+
+	public function setRoles($roles){
+		$this->roles = $roles;
+	}
+
+	public function getRoles(){
+		return [
+			'ROLE_USER',
+		];
 	}
 }
