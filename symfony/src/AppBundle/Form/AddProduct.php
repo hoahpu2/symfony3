@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+//Code Review Videos
 
 class AddProduct extends AbstractType
 {
@@ -35,7 +36,7 @@ class AddProduct extends AbstractType
             ))
             ->add('avatar', FileType::class, array('attr' => array('id' => 'id-input-file-2'),
             	'constraints' => array(
-            		new NotBlank(array("message" => "Please provide a valid avatar")),
+            		new NotBlank(array("message" => "Please provide a valid avatar")), 
             		new File(array("mimeTypes" => array("image/*"))),
             	)
             ))
