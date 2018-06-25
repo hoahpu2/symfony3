@@ -2,12 +2,13 @@
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
  */
-class User
+class User implements UserInterface, \Serializable
 	{
 	/**
 	 * @ORM\Column(type="integer")
@@ -40,7 +41,7 @@ class User
 		return $this->id;
 	}
 
-	public function getName(){
+	public function getUsername(){
 		return $this->name;
 	}
 
@@ -58,6 +59,10 @@ class User
 
 	public function setPassword($password){
 		$this->password = $password;
+	}
+	
+	public function getPassword(){
+		return $this->password;
 	}
 
 	public function serialize(){
@@ -85,4 +90,16 @@ class User
 			'ROLE_USER',
 		];
 	}
+	
+	public function getSalt()
+	{ 
+		// you *may* need a real salt depending on your encoder
+		// see section on salt below
+		return null;
+	}
+	
+	public function eraseCredentials()
+	{
+	}
+	
 }

@@ -51,10 +51,11 @@ class HelloController extends Controller{
 	 */
 	public function addProduct(Request $request){
 		
-		$form = $this->createForm('AppBundle\Form\AddProduct',array(
+		$form = $this->createForm('AppBundle\Form\AddProduct', array(
 				'action' => $this->generateUrl('add-product'),
 				'method' => 'POST'
 		));
+		$formView = $form->createView();
 		
 		if ($request->isMethod('POST')) {
 			
@@ -62,6 +63,9 @@ class HelloController extends Controller{
 			$form->handleRequest($request);
 			
 			if($form->isSubmitted() && $form->isValid()){
+				echo "<pre>";
+				print_r($form->getData() );
+				exit("+++++++DEBUG++++++++"); 
 				$file = $form->getData()['avatar'];
 				$fileName = md5(uniqid()).'.'.$file->guessExtension();
 
@@ -69,7 +73,6 @@ class HelloController extends Controller{
 				
 				$product = new Product();
 				$entityManager = $this->getDoctrine()->getManager();
-				$product = new Product();
 				$product->setName($form->getData()['name']);
 				$product->setPrice($form->getData()['price']);
 				$product->setDescription($form->getData()['description']);
@@ -94,7 +97,7 @@ class HelloController extends Controller{
 		
 		
 		return $this->render('admin/product/add.html.twig', array(
-				'form' => $form->createView()
+				'form' => $formView
 		));
 
 		if (!$request->request->get('name') && !$request->request->get('price') && !$request->request->get('avatar')){
@@ -144,7 +147,7 @@ class HelloController extends Controller{
 	}
 	
 	/**
-	 * @Route("/admin/product/index?page=1", name="index-product")
+	 * @Route("/admin/product/index", name="index-product")
 	 */
 	public function index(Request $request){
 		
@@ -160,9 +163,6 @@ class HelloController extends Controller{
 				$request->query->getInt('page', 2)/*page number*/,
             	$request->query->getInt('limit', 5)/*limit per page*/
 		);
-		$repository = $this->getDoctrine()->getRepository(Product::class);
-		$products = $repository->findAll();
-		die($products);
 		return $this->render('admin/product/index.html.twig', [
 				'blog_posts' => $blogPosts,
 				]);
