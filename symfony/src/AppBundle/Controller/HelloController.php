@@ -63,9 +63,6 @@ class HelloController extends Controller{
 			$form->handleRequest($request);
 			
 			if($form->isSubmitted() && $form->isValid()){
-				echo "<pre>";
-				print_r($form->getData() );
-				exit("+++++++DEBUG++++++++"); 
 				$file = $form->getData()['avatar'];
 				$fileName = md5(uniqid()).'.'.$file->guessExtension();
 

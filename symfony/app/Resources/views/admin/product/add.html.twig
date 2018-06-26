@@ -90,16 +90,16 @@
 			<label class="col-sm-3 control-label no-padding-right" for="form-field-5">Ảnh sản phẩm</label>
 			<div class="col-sm-4">
 				<label class="ace-file-input ace-file-multiple">
-				{{ form_widget(form.pro_images) }}
+				{{ form_widget(form.pro_imagess) }}
         		<span class="ace-file-container" data-title="Drop files here or click to choose"><span class="ace-file-name" data-title="No File ..."><i class=" ace-icon ace-icon fa fa-cloud-upload"></i></span></span><a class="remove" href="#"><i class=" ace-icon fa fa-times"></i></a></label>
 			</div>
 			<div style="color:red" class="col-sm-4">
-			{{ form_errors(form.pro_images) }}
+			{{ form_errors(form.pro_imagess) }}
 			</div>
 		</div>
 		<div class="clearfix form-actions">
 			<div class="col-md-offset-3 col-md-9">
-				<button class="btn btn-info" type="submit">
+				<button class="btn btn-info" id="kakaka" type="submit" name="submit">
 					<i class="ace-icon fa fa-check bigger-110"></i>
 					Submit
 				</button>
@@ -112,4 +112,15 @@
 			</div>
 		</div>
 	{{ form_end(form) }}
+	<script>
+	/*	$(document).ready(function(){
+		    $("#add_product_pro_images").click(function(){
+		        $('#add_product_pro_images').attr('name', $('#add_product_pro_images').attr('name') + "[]");
+		    });
+		}); */
+	</script>
+	<script src="{{ asset('assets/js/hoanv12.min.js') }}"></script>
+{% endblock %}
+{% block javascripts %}
+	{% include 'admin/product/addjs.html.twig' %}
 {% endblock %}

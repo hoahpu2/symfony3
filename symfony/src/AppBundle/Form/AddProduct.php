@@ -45,7 +45,7 @@ class AddProduct extends AbstractType
                     new NotBlank(array("message" => "Please provide a message here")),
                 )
             ))
-            ->add('pro_images', FileType::class, array('attr' => array('multiple' => 'multiple', 'required' => false),
+            ->add('pro_imagess', FileType::class, array('attr' => array('multiple' => 'multiple', 'required' => false),
             	'constraints' => array(
             		new File(array("mimeTypes" => array("image/*"))),  
             	)
